@@ -20,7 +20,7 @@ switch(liriArgument) {
 	spotifyThisSong(); 
 	break;  
 
-	case "do-what-it-says"; 
+	case "do-what-it-says":
 	doWhatItSays(); 
 	break;
 };
@@ -57,71 +57,51 @@ request(queryURL, function(error, response, body) {
 	}
 
 }); 
-}; 
+} 
 
-/*function myTweets() {
-	var client = new twitter({
-		consumer_key: keys.twitterKeys.consumer_key, 
-		consumer_secret: keys.twitterKeys.consumer_secret, 
-		access_token_key: keys.twitterKeys.access_token_key,
-		access_token_secret: keys.twitterKeys.access_token_secret,
-	});
-
+function myTweets() {
 	var twitterUsername = process.argv[3]; 
 	if(!twitterUsername){
 		twitterUsername = "Mz_CLK";
 	}
-	params = {screen_name: twitterUsername};
-	client.get("statuses/user_timeline/", params, function(error, data, response){
-		if(!error){
-			for(var i = 0; i < data.length; i++) {
-				var twitterResults = "@" + data[i].user.screen_name + ": " + 
-				data[i].text + "\n" + 
-				data[i].created_at + "\n" + 
-				"------------------------------ " + i + " ------------------------------" + "\n";
+	var params = {
+		q: "twitterUsername", 
+		count: 20}
+
+	client.get("search/tweets", params, gotData); 
+	function gotData(err, data, response){
+		var tweets = data.statuses; 
+		for (var i = 0; i < tweets.length; i++){
+			console.log(tweets[i].text;);
+		}
+	} 
+/*function spotifyThisSong() {
+	var songTitle = process.argv[4];
+	var err = "";
+	
+	spotify.search({ type: "track", query: "I want it that way"}, function(error, data){
+		if( err){
+			console.log("Error occured: " + err);
+			return; 
+		} 
+		if(process.argv[4]){
+  			var data = data.tracks.items; 
+  			for(var i = 0; i < data.length; i++){
+  				console.log(data[i].artists.name);
+  			  	console.log(data[i].name);
+  				console.log(data[i].song); 
+  				console.log(data[i].album.name);
+  				console.log(data[i].preview_url);
+
+  				for(var j = 0; j < data[i].artists.length; j++){
+  					console.log(data[i].artists[j].name);
+  				}
 			}
-		}else {
-			console.log("error: " + error);
-			return;
 		}
 	}); 
-}; 
+} 
 */
-
-var getArtistNames = function(artist) {
-  return artist.name;
-};
-
-//Function for finding songs on Spotify
-var getMeSpotify = function(songName) {
-  //If it doesn't find a song, find Blink 182's What's my age again
-  if (songName === undefined) {
-    songName = 'What\'s my age again';
-  };
-
-  spotify.search({ type: 'track', query: songName }, function(err, data) {
-    if (err) {
-      console.log('Error occurred: ' + err);
-      return;
-    }
-
-    var songs = data.tracks.items;
-    var data = []; //empty array to hold data
-
-    for (var i = 0; i < songs.length; i++) {
-      data.push({
-        'artist(s)': songs[i].artists.map(getArtistNames),
-        'song name: ': songs[i].name,
-        'preview song: ': songs[i].preview_url,
-        'album: ': songs[i].album.name,
-      });
-    }
-    console.log(data);
-    writeToLog(data);
-  });
-};
-
-function doWhatItSays() {
+/*function doWhatItSays() {
 	var doWhatItSays = function() {
   	fs.readFile("random.txt", "utf8", function(error, data) {
     console.log(data);
@@ -135,5 +115,4 @@ function doWhatItSays() {
 
   });
 }
-	
-
+*/
